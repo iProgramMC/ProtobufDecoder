@@ -1,10 +1,16 @@
-// Homebrew implementation of the protobuf messaging protocol.
+// ProtobufDecoder - Homebrew implementation of the protobuf messaging protocol.
+// Copyright (C) 2024 iProgramInCpp
 #pragma once
 
 #include <map>
 #include <vector>
 #include <string>
+#include <cstring>
 #include <cassert>
+
+#ifndef _countof
+#define _countof(x) (sizeof(x) / sizeof(*(x)))
+#endif
 
 void OutputPrintf(const char*, ...);
 // My investigatory skills told me this implementation lacks memory leaks.  Great!!
@@ -236,6 +242,7 @@ namespace Protobuf
 		ObjectBaseMessage* SetFieldUnique(FieldNumber fieldNum) {
 			m_fieldsUnique[fieldNum] = true;
 			MarkDirty();
+			return this;
 		}
 
 		ObjectBase* GetFieldObject(FieldNumber fieldNum) override
